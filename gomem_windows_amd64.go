@@ -124,6 +124,18 @@ func (p *Process) ReadFloat64(offset uintptr) (float64, error) {
 	return value, err
 }
 
+// Read string from process memory.
+func (p *Process) ReadString(offset uintptr) (string, error) {
+	var (
+		value    string
+		valuePtr = (uintptr)(unsafe.Pointer(&value))
+	)
+
+	err := p.Read(offset, valuePtr, unsafe.Sizeof(value))
+
+	return value, err
+}
+
 // Write process memory.
 func (p *Process) Write(offset uintptr, buffer uintptr, length uintptr) error {
 	_, err := kernel32.WriteProcessMemory(p.Handle, offset, buffer, length)
