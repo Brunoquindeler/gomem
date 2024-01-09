@@ -1,6 +1,7 @@
 package gomem
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -156,10 +157,10 @@ func TestProcessReadFloat64(t *testing.T) {
 	}
 }
 
-func TestProcessReadString(t *testing.T) {
+func TestProcessReadString16(t *testing.T) {
 	name := executableName()
 
-	var value = (string)("any string")
+	var value = [16]byte{1, 2}
 	valuePtr := (uintptr)(unsafe.Pointer(&value))
 
 	process, err := GetOpenProcessFromName(name)
@@ -168,13 +169,14 @@ func TestProcessReadString(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	assertValue, err := process.ReadString(valuePtr)
+	assertValue, err := process.ReadString16(valuePtr)
+	fmt.Println(assertValue)
 
 	if err != nil {
 		t.Errorf(err.Error())
 	}
 
-	if value != assertValue {
+	if string(value[:]) != assertValue {
 		t.Errorf("unexpected value")
 	}
 }

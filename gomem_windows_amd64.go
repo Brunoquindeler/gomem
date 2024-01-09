@@ -124,16 +124,16 @@ func (p *Process) ReadFloat64(offset uintptr) (float64, error) {
 	return value, err
 }
 
-// Read string from process memory.
-func (p *Process) ReadString(offset uintptr) (string, error) {
+// Read string16 from process memory.
+func (p *Process) ReadString16(offset uintptr) (string, error) {
 	var (
-		value    string
+		value    [16]byte
 		valuePtr = (uintptr)(unsafe.Pointer(&value))
 	)
 
 	err := p.Read(offset, valuePtr, unsafe.Sizeof(value))
 
-	return value, err
+	return string(value[:]), err
 }
 
 // Write process memory.
