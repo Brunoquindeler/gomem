@@ -3,8 +3,8 @@ package gomem
 import (
 	"unsafe"
 
-	"github.com/jamesmoriarty/gomem/internal/kernel32"
-	"github.com/jamesmoriarty/gomem/internal/user32"
+	"github.com/brunoquindeler/gomem/internal/kernel32"
+	"github.com/brunoquindeler/gomem/internal/user32"
 )
 
 // Process is a struct representing a windows process.
