@@ -110,6 +110,52 @@ func TestProcessReadUInt64(t *testing.T) {
 	}
 }
 
+func TestProcessReadFloat32(t *testing.T) {
+	name := executableName()
+
+	var value = (float32)(42.0)
+	valuePtr := (uintptr)(unsafe.Pointer(&value))
+
+	process, err := GetOpenProcessFromName(name)
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	assertValue, err := process.ReadFloat32(valuePtr)
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	if value != assertValue {
+		t.Errorf("unexpected value")
+	}
+}
+
+func TestProcessReadFloat64(t *testing.T) {
+	name := executableName()
+
+	var value = (float64)(42.0)
+	valuePtr := (uintptr)(unsafe.Pointer(&value))
+
+	process, err := GetOpenProcessFromName(name)
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	assertValue, err := process.ReadFloat64(valuePtr)
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	if value != assertValue {
+		t.Errorf("unexpected value")
+	}
+}
+
 func TestProcessWriteByte(t *testing.T) {
 	name := executableName()
 
