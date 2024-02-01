@@ -44,6 +44,18 @@ func GetOpenProcessFromName(name string) (*Process, error) {
 	return process, nil
 }
 
+// GetOpenProcessFromPID converts a process pid to a Process struct with open handle.
+func GetOpenProcessFromPID(pid uint32) (*Process, error) {
+	process := Process{ID: pid, Name: ""}
+
+	_, err := process.Open()
+	if err != nil {
+		return nil, err
+	}
+
+	return &process, nil
+}
+
 // Open process handle.
 func (p *Process) Open() (uintptr, error) {
 	handle, err := kernel32.OpenProcess(kernel32.PROCESS_ALL_ACCESS, false, p.ID)
